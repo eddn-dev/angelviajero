@@ -1,0 +1,157 @@
+[
+    {
+      "id": "prod_001",
+      "sku_base": "MOL-BG7X",
+      "nombre": "Balón de baloncesto Molten BG7X-QL777",
+      "descripcion_corta": "Balón de PU alta calidad para interiores y exteriores.",
+      "descripcion_larga": "Elaborada con material de PU de primera calidad, esta pelota de baloncesto Molten garantiza durabilidad y longevidad...",
+      "caracteristicas_destacadas": [
+        "Material de alta calidad: Elaborada con material de PU...",
+        "Opciones de tamaño versátiles: Disponible en los tamaños 7, 6 y 5...",
+        "Ideal para entrenamiento: Esta pelota de baloncesto es perfecta...",
+        "Diseño elegante: La pelota de baloncesto Molten presenta..."
+      ],
+      "categoria": "Baloncesto",
+      "imagen_principal": "molten_bg7x_naranja.webp",
+      "imagenes_galeria": [
+        "molten_bg7x_detalle1.webp",
+        "molten_bg7x_detalle2.webp",
+        "molten_bg7x_detalle3.webp",
+        "molten_bg7x_detalle4.webp",
+        "molten_bg7x_detalle5.jpg"
+      ],
+      "en_oferta": false,
+      "precio_base": 599.00,
+      "precio_oferta": null,
+      "variantes": [
+        {
+          "id_variante": "prod_001_sz7",
+          "sku_variante": "MOL-BG7X-7",
+          "atributos": {
+            "tamaño": "7",
+            "color": "Naranja Oscuro" 
+          },
+          "precio": 599.00,
+          "stock": 15
+        },
+        {
+          "id_variante": "prod_001_sz6",
+          "sku_variante": "MOL-BG7X-6",
+          "atributos": {
+            "tamaño": "6",
+            "color": "Naranja Oscuro"
+          },
+          "precio": 579.00,
+          "stock": 10
+        },
+        {
+          "id_variante": "prod_001_sz5",
+          "sku_variante": "MOL-BG7X-5",
+          "atributos": {
+            "tamaño": "5",
+            "color": "Naranja Oscuro"
+          },
+          "precio": 559.00,
+          "stock": 20
+        }
+      ]
+    },
+    {
+      "id": "prod_002",
+      "sku_base": "MOL-V5M5000",
+      "nombre": "Balón de Voleibol V5M5000 FLISTATEC Molten",
+      "descripcion_corta": "Balón oficial FMVB/FIVB con tecnología de estabilidad en vuelo.",
+      "descripcion_larga": "Balón Oficial de la FMVB y certificado por la FIVB. Balón de Juego para la NORCECA...",
+      "caracteristicas_destacadas": [
+        "Tecnología FLISTATEC: Estabilidad de Vuelo.",
+        "Paneles hexagonales para mayor estabilidad en el aire.",
+        "Diseño de paneles y colores para fácil seguimiento.",
+        "Cubierta de microfibra texturizada para mejor agarre."
+      ],
+      "categoria": "Voleibol",
+      "imagen_principal": "molten_v5m5000_tricolor.webp",
+      "imagenes_galeria": [
+        "molten_v5m5000_tricolor_detalle1.webp",
+        "molten_v5m5000_tricolor_detalle2.webp",
+        "molten_v5m5000_tricolor_detalle3.webp",
+        "molten_v5m5000_tricolor_detalle4.webp",
+        "molten_v5m5000_tricolor_detalle5.webp",
+        "molten_v5m5000_tricolor_detalle6.webp"
+      ],
+      "en_oferta": true,
+      "precio_base": 750.00, 
+      "precio_oferta": 699.00,
+      "variantes": [
+        {
+          "id_variante": "prod_002_sz5",
+          "sku_variante": "MOL-V5M5000-5",
+          "atributos": {
+            "tamaño": "5",
+            "color": "Blanco/Verde/Rojo"
+          },
+          "precio": 699.00,
+          "stock": 30
+        }
+    ]
+    },
+    {
+        "id": "prod_003",
+        "sku_base": "MOL-BG7X-XJ1000",
+        "nombre": "Balón de basquetbol Molten BG7X-XJ1000",
+        "descripcion_corta": "BALÓN MOLTEN DE ALTA CALIDAD.",
+        "descripcion_larga": "Resistente al desgaste para entrenamiento en interiores y exteriores. Elaborado con material de PU de alta calidad, este balón es ideal para jugadores que buscan durabilidad y rendimiento.",
+        "caracteristicas_destacadas": [
+          "Marca: Molten",
+          "Modelo: XJ1000",
+          "Tamaño: Tamaño oficial 7 - 29.5 pulgadas, tamaño de mujer 6 - 28.5 pulgadas, tamaño de adolescentes 5 -27.5 pulgadas",
+          "Material: Piel sintética de primera calidad",
+          "Materiales: HECHO EN PIEL SINTÉTICA PARA INTERIOR Y EXTERIOR. SU MATERIAL DE PIEL SINTÉTICA LE PROPORCIONA UNA DURABILIDAD Y RESISTENCIA DE ALTA GAMA."," Aplicación: piso de madera, piso de cemento, piso de goma, etc."
+        ],
+        "categoria": "Baloncesto",
+        "imagen_principal": "molten_bg7x_xj1000.webp",
+        "imagenes_galeria": [
+          "molten_bg7x_xj1000_detalle1.webp",
+            "molten_bg7x_xj1000_detalle2.webp",
+            "molten_bg7x_xj1000_detalle3.webp",
+            "molten_bg7x_xj1000_detalle4.webp",
+            "molten_bg7x_xj1000_detalle5.webp",
+            "molten_bg7x_xj1000_detalle6.webp",
+            "molten_bg7x_xj1000_detalle7.webp"
+        ],
+        "en_oferta": true,
+        "precio_base": 750.00, 
+        "precio_oferta": 699.00,
+        "variantes": [
+          {
+            "id_variante": "prod_003_sz5",
+            "sku_variante": "MOL-BG7X-XJ1000-5",
+            "atributos": {
+              "tamaño": "5",
+                "color": "Naranja Oscuro"
+            },
+            "precio": 699.00,
+            "stock": 30
+          },
+        {
+                "id_variante": "prod_003_sz6",
+                "sku_variante": "MOL-BG7X-XJ1000-6",
+                "atributos": {
+                    "tamaño": "6",
+                    "color": "Naranja Oscuro"
+                },
+                "precio": 699.00,
+                "stock": 30
+        },
+        {
+                "id_variante": "prod_003_sz7",
+                "sku_variante": "MOL-BG7X-XJ1000-7",
+                "atributos": {
+                    "tamaño": "7",
+                    "color": "Naranja Oscuro"
+                },
+                "precio": 699.00,
+                "stock": 30
+        }
+      ]
+    }
+]
