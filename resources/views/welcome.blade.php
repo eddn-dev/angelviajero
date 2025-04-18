@@ -1,167 +1,247 @@
 {{-- resources/views/welcome.blade.php --}}
+{{-- Extiende el layout principal que contiene header y footer --}}
+@extends('layouts.app') {{-- Asegúrate que el nombre del layout sea correcto --}}
 
-@extends('layouts.app') 
+{{-- Define el título específico para esta página --}}
+@section('title', 'Bienvenido a SIBIPN - Sistema Integral de Bibliotecas IPN')
 
-@section('content') 
+{{-- Inicia la sección de contenido principal --}}
+@section('content')
 
-    {{-- Sección Hero --}}
-    <section class="relative bg-gradient-to-r from-gray-800 to-orange-900 text-white rounded-lg shadow-lg overflow-hidden mb-12">
-        <img src="{{ asset('images/hero.jpg') }}" alt="Imagen Hero Deportiva" class="absolute inset-0 w-full h-full object-cover opacity-50" onerror="this.style.display='none'">
-        <div class="relative z-10 p-8 md:p-16 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Supera Tus Límites</h1>
-            <p class="text-lg md:text-xl mb-8">Encuentra el equipamiento perfecto para alcanzar tus metas.</p>
-            <a href="{{-- route('tienda.index') --}}" class="bg-white text-orange-600 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
-                Ver Productos
-            </a>
+    {{-- 1. Sección Principal (Hero) - Mantiene texto blanco sobre overlay oscuro --}}
+    <section class="relative bg-ipn-guinda text-white h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('images/hero.jpg');"></div>
+        <div class="absolute inset-0 bg-ipn-guinda opacity-75 z-10"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20"
+             x-data="{ loaded: false }" x-init="() => { setTimeout(() => loaded = true, 100) }">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-teko font-bold mb-4 text-white transition-all duration-700 ease-out" {{-- Asegurado: text-white --}}
+                :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
+                Sistema Integral de Bibliotecas IPN
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl font-sans mb-8 max-w-3xl mx-auto text-white transition-all duration-700 ease-out delay-150" {{-- Asegurado: text-white --}}
+               :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
+                Tu acceso unificado al conocimiento politécnico. Busca, descubre y aprende con todos los recursos a tu alcance.
+            </p>
+            <div class="space-x-4 transition-all duration-700 ease-out delay-300"
+                 :class="loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
+                <a href="#" class="bg-white text-ipn-guinda hover:bg-ipn-gray-light px-6 py-3 rounded-md text-lg font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+                    Iniciar Sesión
+                </a>
+                <a href="/buscar" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-ipn-guinda px-6 py-3 rounded-md text-lg font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+                    Ir a SIBIPN
+                </a>
+            </div>
         </div>
     </section>
 
-    {{-- Sección Novedades --}}
-    <section class="mb-16">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center md:text-left">Novedades</h2>
-        @if ($novedades->isNotEmpty())
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach($novedades as $producto)
-                    {{-- Usamos el componente Blade product-card --}}
-                    <x-product-card :producto="$producto" /> 
-                @endforeach
-            </div>
-        @else
-            <p class="text-gray-500 text-center md:text-left">Pronto tendremos nuevos productos.</p>
-        @endif
-    </section>
-
-    {{-- Sección Ofertas --}}
-    <section class="mb-16 bg-orange-50 py-12 rounded-lg px-6">
-        <h2 class="text-3xl font-bold text-orange-700 mb-6 text-center">🔥 ¡Ofertas Especiales!</h2>
-        @if ($ofertas->isNotEmpty())
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach($ofertas as $producto)
-                     {{-- Reutilizamos el componente Blade product-card --}}
-                    <x-product-card :producto="$producto" />
-                @endforeach
-            </div>
-        @else
-            <p class="text-gray-600 text-center">No hay ofertas disponibles en este momento.</p>
-        @endif
-    </section>
-
-    {{-- Sección Categorías Destacadas (Visual) --}}
-    @if ($categoriasInfo->isNotEmpty())
-    <section class="mb-16">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Explora Nuestras Categorías</h2>
-        {{-- Ajusta el número de columnas según cuántas categorías tengas --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 {{ $categoriasInfo->count() >= 3 ? 'lg:grid-cols-3' : '' }} gap-6">
-            @foreach($categoriasInfo as $categoria)
-            <a href="{{ $categoria['url'] }}" class="group block relative rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-1 transition duration-300">
-                {{-- TODO: Reemplazar placeholder con imagen real de categoría --}}
-                <img src="{{ asset('images/categories/' . $categoria['imagen']) }}" alt="{{ $categoria['nombre'] }}" 
-                     class="w-full h-64 object-cover transition duration-500 ease-in-out group-hover:scale-110"
-                     onerror="this.src='https://placehold.co/400x300/cccccc/333?text={{ urlencode($categoria['nombre']) }}'; this.alt='{{ $categoria['nombre'] }}';">
-                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 transition duration-300 group-hover:bg-opacity-60">
-                    <h3 class="text-white text-2xl font-semibold text-center">{{ $categoria['nombre'] }}</h3>
+    {{-- 2. Sección Características Clave - Fondo Blanco, Texto Oscuro --}}
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl lg:text-4xl font-teko font-bold text-center text-ipn-guinda mb-12">¿Qué puedes hacer en SIBIPN?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                {{-- Card 1 --}}
+                <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center transition-all duration-700 ease-out" {{-- Borde más sutil --}}
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <svg class="h-12 w-12 mx-auto mb-4 text-ipn-guinda" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <h3 class="text-xl font-roboto font-semibold mb-2 text-ipn-gray-dark">Búsqueda Unificada</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                    <p class="text-ipn-gray font-sans">Encuentra libros físicos, tesis, artículos y recursos digitales de todas las bibliotecas IPN en un solo lugar.</p> {{-- Asegurado: text-ipn-gray --}}
                 </div>
-            </a>
-            @endforeach
-        </div>
-    </section>
-    @endif
-
-    {{-- Sección Propuesta de Valor --}}
-    <section class="mb-16 bg-gray-100 py-12 rounded-lg px-6">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">En Angel Viajero</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {{-- Item 1: Calidad Garantizada (Icono sin cambios) --}}
-            <div class="flex flex-col items-center">
-                 <svg class="h-12 w-12 text-orange-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Calidad Garantizada</h3>
-                 <p class="text-gray-600">Seleccionamos los mejores productos para tu rendimiento.</p>
-            </div>
-
-            {{-- Item 2: Atención Directa (Icono WhatsApp) --}}
-             <div class="flex flex-col items-center">
-                 {{-- Icono WhatsApp (Bootstrap Icons) --}}
-                 {{-- Se ajusta viewBox a 0 0 16 16 para este path específico --}}
-                 <svg class="h-12 w-12 text-orange-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                     <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-                 </svg>
-                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Atención Directa</h3>
-                 <p class="text-gray-600">Resolvemos tus dudas y gestionamos tu pedido por WhatsApp.</p>
-            </div>
-
-            {{-- Item 3: Envíos Confiables (Icono Coche Frontal) --}}
-             <div class="flex flex-col items-center">
-                  {{-- Icono Coche Frontal (Material Design Icons - directions_car) --}}
-                  <svg class="h-12 w-12 text-orange-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
-                  </svg>
-                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Envíos Confiables</h3>
-                  <p class="text-gray-600">Coordinamos la entrega para que recibas tus productos.</p>
-             </div>
-        </div>
-    </section>
-
-    {{-- Sección Cómo Comprar --}}
-    <section class="mb-16">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Compra Fácil por WhatsApp</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            {{-- Paso 1 --}}
-            <div class="flex flex-col items-center">
-                <div class="bg-orange-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">1</div>
-                <h4 class="font-semibold text-lg mb-2">Explora y Añade</h4>
-                <p class="text-gray-600 text-sm">Navega por nuestros productos y agrégalos a tu carrito.</p>
-            </div>
-             {{-- Paso 2 --}}
-             <div class="flex flex-col items-center">
-                <div class="bg-orange-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">2</div>
-                <h4 class="font-semibold text-lg mb-2">Revisa tu Carrito</h4>
-                <p class="text-gray-600 text-sm">Ve al icono del carrito para ver tu selección y cantidades.</p>
-            </div>
-             {{-- Paso 3 --}}
-             <div class="flex flex-col items-center">
-                <div class="bg-orange-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">3</div>
-                <h4 class="font-semibold text-lg mb-2">Envía por WhatsApp</h4>
-                <p class="text-gray-600 text-sm">Haz clic en el botón para enviarnos tu pedido directamente.</p>
-            </div>
-             {{-- Paso 4 --}}
-             <div class="flex flex-col items-center">
-                <div class="bg-orange-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl font-bold mb-4">4</div>
-                <h4 class="font-semibold text-lg mb-2">Coordina y Recibe</h4>
-                <p class="text-gray-600 text-sm">Te contactaremos para confirmar pago y detalles de envío.</p>
+                {{-- Card 2 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center transition-all duration-700 ease-out delay-100"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <svg class="h-12 w-12 mx-auto mb-4 text-ipn-guinda" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <h3 class="text-xl font-roboto font-semibold mb-2 text-ipn-gray-dark">Acceso Digital Fácil</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                    <p class="text-ipn-gray font-sans">Ingresa a bases de datos, revistas electrónicas y libros digitales con tus credenciales IPN (SSO).</p> {{-- Asegurado: text-ipn-gray --}}
+                </div>
+                {{-- Card 3 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center transition-all duration-700 ease-out delay-200"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <svg class="h-12 w-12 mx-auto mb-4 text-ipn-guinda" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="text-xl font-roboto font-semibold mb-2 text-ipn-gray-dark">Disponibilidad Real</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                    <p class="text-ipn-gray font-sans">Verifica en tiempo real si un libro está disponible, prestado o en qué biblioteca se encuentra.</p> {{-- Asegurado: text-ipn-gray --}}
+                </div>
+                 {{-- Card 4 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center transition-all duration-700 ease-out delay-300"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <svg class="h-12 w-12 mx-auto mb-4 text-ipn-guinda" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                    <h3 class="text-xl font-roboto font-semibold mb-2 text-ipn-gray-dark">Recursos de Aprendizaje</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                    <p class="text-ipn-gray font-sans">Accede a tutoriales, guías y talleres para mejorar tus habilidades de investigación e información.</p> {{-- Asegurado: text-ipn-gray --}}
+                </div>
+                 {{-- Card 5 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center transition-all duration-700 ease-out delay-400"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <svg class="h-12 w-12 mx-auto mb-4 text-ipn-guinda" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <h3 class="text-xl font-roboto font-semibold mb-2 text-ipn-gray-dark">Comunidad y Foros</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                    <p class="text-ipn-gray font-sans">Conéctate con otros politécnicos, discute temas académicos y forma grupos de estudio.</p> {{-- Asegurado: text-ipn-gray --}}
+                </div>
+                 {{-- Card 6 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center transition-all duration-700 ease-out delay-500"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <svg class="h-12 w-12 mx-auto mb-4 text-ipn-guinda" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <h3 class="text-xl font-roboto font-semibold mb-2 text-ipn-gray-dark">Tu Espacio Personal</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                    <p class="text-ipn-gray font-sans">Gestiona tus préstamos, renovaciones, reservas, historial y listas de favoritos desde "Mi SIBIPN".</p> {{-- Asegurado: text-ipn-gray --}}
+                </div>
             </div>
         </div>
     </section>
 
-    {{-- Sección Ubicaciones de Entrega --}}
-    <section class="mb-16 bg-gray-100 py-12 rounded-lg px-6">
-        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Puntos de Entrega</h2>
-        <div class="flex flex-col md:flex-row gap-8 items-center">
-            <div class="md:w-1/2">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Entrega Personal en:</h3>
-                <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
-                    {{-- TODO: Listar ubicaciones reales --}}
-                    <li>Plaza Las Américas, Ecatepec</li>
-                    <li>Los Heroes V Seccion</li>
-                    <li>Central de Abasto Ecatepec</li>
-                    <li>Plaza Aragón</li>
-                    <li>Indios Verdes</li>
-                    <li>Líneas de metro</li>
-                </ul>
-                <p class="text-sm text-gray-600">Contáctanos por WhatsApp para coordinar el punto exacto y horario.</p>
-            </div>
-            <div class="md:w-1/2">
-                <iframe src="https://www.google.com/maps/d/u/3/embed?mid=140nBbc9rL7O70mH0G8ke8UPggf4ZAwA&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>
+    {{-- 3. Sección Estadísticas (SIBIPN en Números) - Fondo Blanco, Texto Oscuro --}}
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl lg:text-4xl font-teko font-bold text-center text-ipn-guinda mb-12">SIBIPN en Números</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div x-data="{ shown: false }" x-intersect:enter.half.once="shown = true"
+                     class="transition-all duration-500 ease-out" :class="shown ? 'opacity-100 scale-100' : 'opacity-0 scale-90'">
+                    <span class="block text-4xl lg:text-5xl font-teko font-bold text-ipn-guinda">1M+</span>
+                    <span class="block mt-2 text-lg text-ipn-gray-dark">Recursos Disponibles</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                </div>
+                 <div x-data="{ shown: false }" x-intersect:enter.half.once="shown = true"
+                     class="transition-all duration-500 ease-out delay-100" :class="shown ? 'opacity-100 scale-100' : 'opacity-0 scale-90'">
+                    <span class="block text-4xl lg:text-5xl font-teko font-bold text-ipn-guinda">50K+</span>
+                    <span class="block mt-2 text-lg text-ipn-gray-dark">Usuarios Activos</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                </div>
+                 <div x-data="{ shown: false }" x-intersect:enter.half.once="shown = true"
+                     class="transition-all duration-500 ease-out delay-200" :class="shown ? 'opacity-100 scale-100' : 'opacity-0 scale-90'">
+                    <span class="block text-4xl lg:text-5xl font-teko font-bold text-ipn-guinda">20+</span>
+                    <span class="block mt-2 text-lg text-ipn-gray-dark">Bibliotecas Conectadas</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                </div>
+                 <div x-data="{ shown: false }" x-intersect:enter.half.once="shown = true"
+                     class="transition-all duration-500 ease-out delay-300" :class="shown ? 'opacity-100 scale-100' : 'opacity-0 scale-90'">
+                    <span class="block text-4xl lg:text-5xl font-teko font-bold text-ipn-guinda">100+</span>
+                    <span class="block mt-2 text-lg text-ipn-gray-dark">Foros y Grupos</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                </div>
             </div>
         </div>
     </section>
 
-    {{-- Sección CTA Final --}}
-    <section class="text-center py-12">
-         <h2 class="text-3xl font-bold text-gray-800 mb-4">¿Listo para Empezar?</h2>
-         <p class="text-gray-600 mb-8">Explora todos nuestros productos y encuentra lo que necesitas.</p>
-         <a href="{{-- route('tienda.index') --}}" class="bg-orange-600 text-white font-semibold py-3 px-10 rounded-full hover:bg-orange-700 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-             Ir a la Tienda
-         </a>
+    {{-- 4. Sección Parallax 1 - Mantenida para contraste visual --}}
+    <section class="relative bg-ipn-guinda-desat py-24 lg:py-32 bg-fixed bg-cover bg-center"
+             style="background-image: url('images/parallax.jpg');">
+         <div class="absolute inset-0 bg-ipn-guinda opacity-70"></div>
+         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+             <h3 class="text-3xl lg:text-4xl font-roboto font-semibold text-white max-w-3xl mx-auto">Impulsando la investigación y el descubrimiento en el Instituto Politécnico Nacional.</h3> {{-- Mantenido: text-white --}}
+         </div>
+    </section>
+
+    {{-- 5. Sección Noticias y Eventos - Fondo Blanco, Texto Oscuro --}}
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl lg:text-4xl font-teko font-bold text-center text-ipn-guinda mb-12">Noticias y Eventos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {{-- Card 1 --}}
+                <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden transition-all duration-700 ease-out hover:shadow-xl"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <img src="https://placehold.co/600x400/CCCCCC/333333?text=Imagen+Noticia" alt="[Imagen de Noticia o Evento]" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-ipn-gray">17 de Abril, 2025</span> {{-- Asegurado: text-ipn-gray --}}
+                        <h3 class="text-xl font-roboto font-semibold mt-2 mb-3 text-ipn-gray-dark">Nuevo Taller: Búsqueda Efectiva en Bases de Datos</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                        <p class="text-ipn-gray font-sans text-sm mb-4">Aprende estrategias avanzadas para encontrar la información que necesitas para tus investigaciones...</p> {{-- Asegurado: text-ipn-gray --}}
+                        <a href="#" class="text-ipn-guinda hover:underline font-medium">Leer más &rarr;</a> {{-- Asegurado: text-ipn-guinda --}}
+                    </div>
+                </div>
+                 {{-- Card 2 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden transition-all duration-700 ease-out delay-100 hover:shadow-xl"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <img src="https://placehold.co/600x400/CCCCCC/333333?text=Imagen+Noticia+2" alt="[Imagen de Noticia o Evento 2]" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-ipn-gray">15 de Abril, 2025</span> {{-- Asegurado: text-ipn-gray --}}
+                        <h3 class="text-xl font-roboto font-semibold mt-2 mb-3 text-ipn-gray-dark">Presentación de Nuevos Recursos Digitales</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                        <p class="text-ipn-gray font-sans text-sm mb-4">Descubre las últimas suscripciones y herramientas digitales disponibles para la comunidad politécnica...</p> {{-- Asegurado: text-ipn-gray --}}
+                        <a href="#" class="text-ipn-guinda hover:underline font-medium">Leer más &rarr;</a> {{-- Asegurado: text-ipn-guinda --}}
+                    </div>
+                </div>
+                 {{-- Card 3 --}}
+                 <div x-data="{ shown: false }" x-intersect:enter.full.once="shown = true"
+                     class="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden transition-all duration-700 ease-out delay-200 hover:shadow-xl"
+                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'">
+                    <img src="https://placehold.co/600x400/CCCCCC/333333?text=Imagen+Noticia+3" alt="[Imagen de Noticia o Evento 3]" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm text-ipn-gray">10 de Abril, 2025</span> {{-- Asegurado: text-ipn-gray --}}
+                        <h3 class="text-xl font-roboto font-semibold mt-2 mb-3 text-ipn-gray-dark">Conferencia: El Futuro de las Bibliotecas Académicas</h3> {{-- Asegurado: text-ipn-gray-dark --}}
+                        <p class="text-ipn-gray font-sans text-sm mb-4">Participa en la discusión sobre los retos y oportunidades que enfrentan las bibliotecas hoy...</p> {{-- Asegurado: text-ipn-gray --}}
+                        <a href="#" class="text-ipn-guinda hover:underline font-medium">Leer más &rarr;</a> {{-- Asegurado: text-ipn-guinda --}}
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                 <a href="/noticias" class="bg-ipn-guinda text-white hover:bg-ipn-guinda-desat px-6 py-3 rounded-md text-lg font-medium transition duration-300 ease-in-out shadow-md transform hover:scale-105">
+                    Ver todas las Noticias
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- 6. Sección Preguntas Frecuentes (FAQ) - Fondo Gris Claro, Texto Oscuro --}}
+    <section class="py-16 lg:py-24 bg-ipn-gray-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl lg:text-4xl font-teko font-bold text-center text-ipn-guinda mb-12">Preguntas Frecuentes</h2>
+            <div class="max-w-3xl mx-auto space-y-4" x-data="{ openFaq: null }">
+                {{-- FAQ Item 1 --}}
+                <div class="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button @click="openFaq = (openFaq === 1 ? null : 1)" class="w-full flex justify-between items-center p-4 text-left text-ipn-gray-dark hover:bg-gray-50 focus:outline-none">
+                        <span class="text-lg font-roboto font-medium">¿Cómo accedo a los recursos digitales?</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                        <svg class="h-6 w-6 transform transition-transform duration-300 text-ipn-guinda" :class="{ 'rotate-180': openFaq === 1 }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse x-cloak class="p-4 border-t border-gray-200">
+                        <p class="text-ipn-gray-dark font-sans">Puedes acceder a todas las bases de datos, revistas y libros electrónicos suscritos por el IPN utilizando tu correo institucional y contraseña a través del sistema de autenticación única (SSO). Simplemente haz clic en el enlace del recurso digital y serás redirigido para iniciar sesión si aún no lo has hecho.</p> {{-- Asegurado: text-ipn-gray-dark --}}
+                    </div>
+                </div>
+                {{-- FAQ Item 2 --}}
+                <div class="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm">
+                     <button @click="openFaq = (openFaq === 2 ? null : 2)" class="w-full flex justify-between items-center p-4 text-left text-ipn-gray-dark hover:bg-gray-50 focus:outline-none">
+                        <span class="text-lg font-roboto font-medium">¿Cómo renuevo mis préstamos?</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                        <svg class="h-6 w-6 transform transition-transform duration-300 text-ipn-guinda" :class="{ 'rotate-180': openFaq === 2 }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse x-cloak class="p-4 border-t border-gray-200">
+                        <p class="text-ipn-gray-dark font-sans">Inicia sesión en SIBIPN, ve a la sección "Mi SIBIPN" > "Mis Préstamos". Allí verás la lista de tus materiales prestados y un botón para renovar aquellos que sean elegibles según las políticas de circulación (si no tienen reservas pendientes y no has excedido el límite de renovaciones).</p> {{-- Asegurado: text-ipn-gray-dark --}}
+                    </div>
+                </div>
+                 {{-- FAQ Item 3 --}}
+                 <div class="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm">
+                     <button @click="openFaq = (openFaq === 3 ? null : 3)" class="w-full flex justify-between items-center p-4 text-left text-ipn-gray-dark hover:bg-gray-50 focus:outline-none">
+                        <span class="text-lg font-roboto font-medium">¿Qué hago si olvidé mi contraseña?</span> {{-- Asegurado: text-ipn-gray-dark --}}
+                        <svg class="h-6 w-6 transform transition-transform duration-300 text-ipn-guinda" :class="{ 'rotate-180': openFaq === 3 }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse x-cloak class="p-4 border-t border-gray-200">
+                        <p class="text-ipn-gray-dark font-sans">SIBIPN utiliza el sistema de autenticación del IPN. Si olvidaste tu contraseña institucional, debes seguir los procedimientos establecidos por la Dirección de Cómputo y Comunicaciones (DCyC) del IPN para recuperarla o restablecerla a través de sus plataformas oficiales.</p> {{-- Asegurado: text-ipn-gray-dark --}}
+                    </div>
+                </div>
+                 {{-- Añadir más preguntas frecuentes aquí --}}
+            </div>
+        </div>
+    </section>
+
+    {{-- 7. Sección Parallax 2 - Mantenida para contraste visual --}}
+    <section class="relative bg-ipn-guinda py-24 lg:py-32 bg-fixed bg-cover bg-center"
+             style="background-image: url('images/parallax2.jpg');">
+         <div class="absolute inset-0 bg-ipn-guinda opacity-80"></div>
+         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+             <h3 class="text-3xl lg:text-4xl font-roboto font-semibold text-white max-w-3xl mx-auto">Innovación y tecnología al servicio de tu aprendizaje y desarrollo profesional.</h3> {{-- Mantenido: text-white --}}
+         </div>
+    </section>
+
+    {{-- 8. Llamada a la Acción Final (CTA) - Fondo Gris Claro, Texto Oscuro --}}
+    <section class="py-16 lg:py-24 bg-ipn-gray-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl lg:text-4xl font-teko font-bold text-ipn-guinda mb-6">¿Listo para explorar SIBIPN?</h2> {{-- Asegurado: text-ipn-guinda --}}
+            <p class="text-lg sm:text-xl text-ipn-gray-dark mb-8 max-w-2xl mx-auto">Accede ahora con tu cuenta politécnica o empieza a descubrir los recursos disponibles.</p> {{-- Asegurado: text-ipn-gray-dark --}}
+            <div class="space-x-4">
+                 <a href="#" class="bg-ipn-guinda text-white hover:bg-ipn-guinda-desat px-8 py-3 rounded-md text-lg font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+                    Iniciar Sesión
+                </a>
+                <a href="/buscar" class="bg-white text-ipn-guinda border-2 border-ipn-guinda hover:bg-gray-50 px-8 py-3 rounded-md text-lg font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+                    Explorar Catálogo
+                </a>
+            </div>
+        </div>
     </section>
 
 @endsection
