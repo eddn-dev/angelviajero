@@ -2,7 +2,7 @@
 {{-- Este componente recibe una variable $producto --}}
 @props(['producto'])
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col group">
+<div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-101 transition duration-300 flex flex-col group">
     
     {{-- Contenedor para la imagen con aspect ratio --}}
     <div class="aspect-[1/1] overflow-hidden bg-gray-100"> {{-- Usando 1:1 para cuadrado --}}

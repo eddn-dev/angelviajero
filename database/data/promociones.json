@@ -1,0 +1,127 @@
+[
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000 #7).",
+        "Hasta agotar existencias.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Comprar ahora",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_002",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (B7G-Z-K. #7).",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones2.png",
+      "cta_texto": "Comprar ahora",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Ver Balones",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Ver Balones",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Ver Balones",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Ver Balones",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Ver Balones",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Comprar ahora",
+      "cta_enlace": "/tienda"
+    },
+    {
+      "id": "promo_001",
+      "titulo": "¡El mejor precio por mayoreo!",
+      "descripcion": "Adquiere 5 balones por un precio especial de $699 c/u. ¡Ahorra $50 por balón!",
+      "condiciones": [
+        "Aplica en balones Molten seleccionados (BG7X-JX1000).",
+        "Un regalo por cliente.",
+        "Hasta agotar existencias del regalo.",
+        "Menciona esta promoción al hacer tu pedido por WhatsApp."
+      ],
+      "imagen_fondo": "images/promociones/promo_balones.png",
+      "cta_texto": "Ver Balones",
+      "cta_enlace": "/tienda"
+    }
+  ]
+  

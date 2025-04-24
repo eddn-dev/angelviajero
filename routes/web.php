@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File; // Para leer archivos locales
@@ -56,3 +57,6 @@ Route::get('/', function () {
 
 Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');
 Route::get('/carrito', [CartController::class, 'index'])->name('carrito.index');
+Route::get('/tienda', [ProductoController::class, 'tiendaIndex'])->name('tienda.index');
+Route::get('/contacto', [HomeController::class, 'contactoIndex'])->name('contacto.index');
+Route::get('/promociones', [HomeController::class, 'promocionesIndex'])->name('promociones.index');

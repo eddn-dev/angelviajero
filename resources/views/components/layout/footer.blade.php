@@ -7,11 +7,9 @@
             <div>
                 <h4 class="text-lg font-semibold text-white mb-4">Compra</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-white transition duration-300">Novedades</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-300">Ropa</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-300">Deporte</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-300">Gimnasio</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-300">Ofertas</a></li>
+                    <li><a href="{{route('tienda.index')}}" class="hover:text-white transition duration-300">Tienda</a></li>
+                    <li><a href="{{ route('promociones.index')}}" class="hover:text-white transition duration-300">Ofertas</a></li>
+                    <li><a href="{{route('contacto.index')}}" class="hover:text-white transition duration-300">Contacto</a></li>
                 </ul>
             </div>
             <div>
@@ -19,7 +17,7 @@
                 <ul class="space-y-2 text-sm">
                     <li><a href="#" class="hover:text-white transition duration-300">Preguntas Frecuentes</a></li>
                     <li><a href="#" class="hover:text-white transition duration-300">Envíos y Devoluciones</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-300">Contacto</a></li>
+                    <li><a href="{{route('contacto.index')}}" class="hover:text-white transition duration-300">Contacto</a></li>
                 </ul>
             </div>
             <div>

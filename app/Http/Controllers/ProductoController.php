@@ -20,34 +20,80 @@ class ProductoController extends Controller
      * @param  string  $id El ID del producto recibido desde la URL.
      * @return \Illuminate\View\View|\Illuminate\Http\Response
      */
-    public function show(string $id)
+    // Aquí podrían ir otros métodos como create, store, edit, update, destroy si manejaras productos desde un admin
+
+    private function obtenerProductos()
     {
-        $jsonPath = database_path('data/products.json'); // Ruta al JSON
-        $productoEncontrado = null;
-
-        if (File::exists($jsonPath)) {
-            $jsonContent = File::get($jsonPath);
-            // Decodifica y convierte a una Colección de Laravel para búsqueda fácil
-            $todosLosProductos = collect(json_decode($jsonContent, true)); 
-
-            // Busca el producto cuyo 'id' coincida con el $id recibido
-            // firstWhere es un método útil de las colecciones
-            $productoEncontrado = $todosLosProductos->firstWhere('id', $id);
-
-        } else {
-             // Si el JSON no existe, no podemos encontrar el producto
-             abort(500, 'Archivo de productos no encontrado.'); // O un error diferente
+        $jsonPath = database_path('data/products.json');
+        if (!File::exists($jsonPath)) {
+            // Manejar el caso donde el archivo no existe
+            return collect([]); // Devuelve una colección vacía
         }
-
-        // Si después de buscar, no encontramos un producto con ese ID, muestra error 404
-        if (!$productoEncontrado) {
-            abort(404, 'Producto no encontrado.');
-        }
-
-        // Si encontramos el producto, pasamos sus datos a la vista 'productos.show'
-        // Asegúrate de crear esta vista en: resources/views/productos/show.blade.php
-        return view('productos.show', ['producto' => $productoEncontrado]);
+        // Decodifica el JSON y lo convierte en una Colección de Laravel
+        return collect(json_decode(File::get($jsonPath), true));
     }
 
-    // Aquí podrían ir otros métodos como create, store, edit, update, destroy si manejaras productos desde un admin
+    /**
+     * Muestra la página de detalle de un producto.
+     * (Tu método existente)
+     * @param string $id
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function show($id)
+    {
+        $productos = $this->obtenerProductos();
+        // Busca el producto por su 'id' (asegúrate que el ID en la URL coincida con el 'id' en el JSON)
+        $producto = $productos->firstWhere('id', $id);
+
+        if (!$producto) {
+            // Si no se encuentra el producto, redirigir o mostrar error 404
+            abort(404, 'Producto no encontrado');
+        }
+
+        // Pasar el producto encontrado a la vista
+        return view('productos.show', compact('producto'));
+    }
+
+    /**
+     * Muestra la página principal de la tienda con productos agrupados por categoría.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function tiendaIndex()
+    {
+        $productos = $this->obtenerProductos();
+
+        // Agrupar los productos por el campo 'categoria'
+        $productosPorCategoria = $productos->groupBy('categoria')
+                                           ->sortKeys(); // Opcional: ordenar categorías alfabéticamente
+
+        // Pasar los productos agrupados a la vista
+        return view('tienda.index', compact('productosPorCategoria'));
+    }
+
+    /**
+     * (Opcional) Muestra productos filtrados por categoría.
+     *
+     * @param string $categoriaSlug El nombre de la categoría (podría necesitarse un slug si hay espacios/acentos)
+     * @return \Illuminate\View\View
+     */
+    // public function tiendaPorCategoria($categoriaSlug)
+    // {
+    //     $productos = $this->obtenerProductos();
+
+    //     // Aquí necesitarías una lógica para mapear el $categoriaSlug a la categoría real si difieren
+    //     $categoriaReal = ucwords(str_replace('-', ' ', $categoriaSlug)); // Ejemplo simple de conversión
+
+    //     $productosFiltrados = $productos->where('categoria', $categoriaReal);
+
+    //     if ($productosFiltrados->isEmpty()) {
+    //          abort(404, 'Categoría no encontrada o sin productos');
+    //     }
+
+    //     // Podrías reutilizar la vista tienda.index o crear una específica
+    //     return view('tienda.categoria', [
+    //         'productos' => $productosFiltrados,
+    //         'categoriaNombre' => $categoriaReal
+    //     ]);
+    // }
 }

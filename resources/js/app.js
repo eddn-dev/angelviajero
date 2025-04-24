@@ -172,15 +172,14 @@ function removeFromCart(variantId) {
  */
 function displayCart() {
     const cart = getCart();
-    const cartItemsContainer = document.getElementById('cart-items-container'); // tbody de tu tabla
+    const cartItemsContainer = document.getElementById('cart-items-container'); // Contenedor para las tarjetas de items
     const cartTotalElement = document.getElementById('cart-total'); // span o div para el total
     const emptyCartMessage = document.getElementById('empty-cart-message'); // div para mensaje de carrito vacío
-    const cartTable = document.getElementById('cart-table'); // La tabla completa o contenedor principal del carrito
+    const cartContainer = document.getElementById('cart-container'); // Contenedor principal del carrito (items + resumen)
     const checkoutButton = document.getElementById('whatsapp-checkout-button'); // Botón de pedir por WhatsApp
 
-    if (!cartItemsContainer || !cartTotalElement || !emptyCartMessage || !cartTable || !checkoutButton) {
-        // No estamos en la página del carrito, o faltan elementos esenciales
-        // console.log("No se encontraron elementos del carrito en esta página.");
+    if (!cartItemsContainer || !cartTotalElement || !emptyCartMessage || !cartContainer || !checkoutButton) {
+        // No estamos en la página del carrito, o faltan elementos
         return;
     }
 
@@ -188,16 +187,14 @@ function displayCart() {
     cartItemsContainer.innerHTML = '';
 
     if (cart.length === 0) {
-        // Mostrar mensaje de carrito vacío y ocultar tabla/resumen
+        // Mostrar mensaje de carrito vacío y ocultar contenedor principal
         emptyCartMessage.classList.remove('hidden');
-        cartTable.classList.add('hidden');
-        checkoutButton.classList.add('hidden'); // Ocultar botón de WhatsApp
-        cartTotalElement.textContent = '0.00'; // Asegurar que el total se muestre como 0
+        cartContainer.classList.add('hidden');
+        cartTotalElement.textContent = '0.00';
     } else {
-        // Ocultar mensaje de carrito vacío y mostrar tabla/resumen
+        // Ocultar mensaje de carrito vacío y mostrar contenedor principal
         emptyCartMessage.classList.add('hidden');
-        cartTable.classList.remove('hidden');
-        checkoutButton.classList.remove('hidden'); // Mostrar botón de WhatsApp
+        cartContainer.classList.remove('hidden');
 
         let totalGeneral = 0;
 
@@ -205,74 +202,88 @@ function displayCart() {
             const subtotal = item.price * item.quantity;
             totalGeneral += subtotal;
 
-            // Crear atributos legibles (ej: "Talla: 7, Color: Naranja")
+            // Crear atributos legibles
             const attributesString = Object.entries(item.variantAttributes)
                 .map(([key, value]) => `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`)
                 .join(', ');
 
-            const row = document.createElement('tr');
-            row.className = 'border-b'; // Estilo Tailwind para la fila
-            row.innerHTML = `
-                <td class="py-4 px-2 md:px-6">
-                    <div class="flex items-center space-x-3">
-                        <img src="${item.imageUrl}" alt="Imagen de ${item.productName}" class="w-16 h-16 object-cover rounded-md hidden sm:block" onerror="this.src='https://placehold.co/64x64/e0e0e0/333?text=Img'; this.alt='Error Imagen'">
+            // Crear la tarjeta del item
+            const itemCard = document.createElement('div');
+            itemCard.className = 'bg-white rounded-lg shadow-sm p-4 flex flex-col sm:flex-row gap-4 border border-gray-100'; // Estilos para la tarjeta
+            itemCard.innerHTML = `
+                <div class="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 self-center sm:self-start">
+                    <img src="${item.imageUrl}" alt="Imagen de ${item.productName}" class="w-full h-full object-cover rounded-md" onerror="this.src='https://placehold.co/112x112/e0e0e0/333?text=Img'; this.alt='Error Imagen'">
+                </div>
+
+                <div class="flex-grow flex flex-col sm:flex-row justify-between gap-4">
+
+                    <div class="flex flex-col justify-between">
                         <div>
-                            <p class="font-semibold text-gray-800">${item.productName}</p>
-                            <p class="text-sm text-gray-500">${attributesString}</p>
+                            <p class="font-semibold text-gray-800 text-base sm:text-lg leading-tight">${item.productName}</p>
+                            ${attributesString ? `<p class="text-sm text-gray-500 mb-2">${attributesString}</p>` : ''}
+                            <button class="remove-item text-red-500 hover:text-red-700 text-sm font-medium" data-variant-id="${item.variantId}">
+                                Eliminar
+                            </button>
+                        </div>
+
+                        <div class="flex items-center space-x-2 mt-2 sm:mt-0">
+                            <button class="quantity-change text-orange-600 hover:text-orange-800 p-1 border rounded-md disabled:opacity-50 disabled:cursor-not-allowed" data-variant-id="${item.variantId}" data-change="-1" ${item.quantity <= 1 ? 'disabled' : ''}>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <span class="font-medium text-sm w-8 text-center">${item.quantity} u.</span>
+                            <button class="quantity-change text-orange-600 hover:text-orange-800 p-1 border rounded-md" data-variant-id="${item.variantId}" data-change="1">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                            </button>
                         </div>
                     </div>
-                </td>
-                <td class="py-4 px-2 md:px-6 text-center">
-                    $${item.price.toFixed(2)}
-                </td>
-                <td class="py-4 px-2 md:px-6">
-                    <div class="flex items-center justify-center space-x-2">
-                        <button class="quantity-change text-orange-600 hover:text-orange-800 disabled:opacity-50" data-variant-id="${item.variantId}" data-change="-1" ${item.quantity <= 1 ? 'disabled' : ''}>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
-                        </button>
-                        <span class="font-medium">${item.quantity}</span>
-                        <button class="quantity-change text-orange-600 hover:text-orange-800" data-variant-id="${item.variantId}" data-change="1">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg>
-                        </button>
+
+                    <div class="text-left sm:text-right flex-shrink-0 pt-2 sm:pt-0">
+                        <p class="font-semibold text-lg text-gray-800">$${subtotal.toFixed(2)}</p>
+                        ${item.quantity > 1 ? `<p class="text-sm text-red-500 mt-1">($${item.price.toFixed(2)} c/u)</p>` : ''}
                     </div>
-                </td>
-                <td class="py-4 px-2 md:px-6 text-center font-semibold">
-                    $${subtotal.toFixed(2)}
-                </td>
-                <td class="py-4 px-2 md:px-6 text-center">
-                    <button class="remove-item text-red-500 hover:text-red-700" data-variant-id="${item.variantId}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </td>
+                </div>
             `;
-            cartItemsContainer.appendChild(row);
+            cartItemsContainer.appendChild(itemCard);
         });
 
         // Actualizar total general
         cartTotalElement.textContent = totalGeneral.toFixed(2);
 
-        // Añadir event listeners a los botones recién creados
+        // --- Re-asignar event listeners (IMPORTANTE) ---
+        // Es necesario volver a asignar listeners después de regenerar el HTML
+
+        // Listeners para botones +/-
         cartItemsContainer.querySelectorAll('.quantity-change').forEach(button => {
-            button.addEventListener('click', (event) => {
-                // Usamos currentTarget para asegurarnos de obtener el botón, incluso si se hizo clic en el SVG interno
-                const targetButton = event.currentTarget;
-                const variantId = targetButton.dataset.variantId;
-                const change = parseInt(targetButton.dataset.change);
-                updateCartQuantity(variantId, change);
-            });
+            // Remover listener antiguo si existe (opcional, pero buena práctica)
+            // button.removeEventListener('click', handleQuantityChange); // Necesitarías una función nombrada
+            button.addEventListener('click', handleQuantityChange);
         });
 
+        // Listeners para botón Eliminar
         cartItemsContainer.querySelectorAll('.remove-item').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const targetButton = event.currentTarget;
-                const variantId = targetButton.dataset.variantId;
-                if (confirm('¿Seguro que quieres eliminar este producto del carrito?')) {
-                    removeFromCart(variantId);
-                }
-            });
+            // button.removeEventListener('click', handleRemoveItem);
+            button.addEventListener('click', handleRemoveItem);
         });
     }
     updateCartCounter(); // Asegurar que el contador del header esté sincronizado
+}
+
+// --- Funciones Handler para listeners (para evitar duplicación y facilitar removerlos si fuera necesario) ---
+
+function handleQuantityChange(event) {
+    const targetButton = event.currentTarget;
+    const variantId = targetButton.dataset.variantId;
+    const change = parseInt(targetButton.dataset.change);
+    updateCartQuantity(variantId, change);
+}
+
+function handleRemoveItem(event) {
+    const targetButton = event.currentTarget;
+    const variantId = targetButton.dataset.variantId;
+    // Usar un modal más elegante sería ideal, pero confirm es funcional
+    if (confirm('¿Seguro que quieres eliminar este producto del carrito?')) {
+        removeFromCart(variantId);
+    }
 }
 
 /**
@@ -328,9 +339,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const VENDEDOR_WHATSAPP = '5215512345678'; // <-- ¡¡¡REEMPLAZA CON TU NÚMERO!!! (Formato internacional sin +, ej. 521 para México celular)
+            const VENDEDOR_WHATSAPP = '5215638193041'; // <-- ¡¡¡REEMPLAZA CON TU NÚMERO!!! (Formato internacional sin +, ej. 521 para México celular)
 
-            let message = "¡Hola Angel Viajero! 👋 Me gustaría pedir lo siguiente:\n\n";
+            // Mensaje inicial con un toque deportivo
+            let message = " *¡Hola, equipo de Angel Viajero!* \n\n";
+            message += "Estoy listo para encestar mi pedido. Aquí te dejo mis selecciones:\n\n";
             let totalPedido = 0;
 
             cart.forEach(item => {
@@ -338,15 +351,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     .map(([key, value]) => `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`)
                     .join(', ');
                 const subtotal = item.price * item.quantity;
-                message += `* ${item.quantity}x ${item.productName} (${attributesString})\n`;
-                message += `   Precio Unitario: $${item.price.toFixed(2)}\n`;
-                // message += `   Subtotal: $${subtotal.toFixed(2)}\n\n`; // Opcional: añadir subtotal por item
+                message += `• *${item.quantity}x ${item.productName}* (${attributesString})\n`;
+                message += `   ▹ Precio Unitario: $${item.price.toFixed(2)}\n\n`;
                 totalPedido += subtotal;
             });
 
-            message += `\n*Total del Pedido: $${totalPedido.toFixed(2)}*\n\n`;
-            message += `¡Espero tu confirmación para coordinar el pago y la entrega! 😊`;
-
+            message += `*Total del Pedido: $${totalPedido.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}*\n\n`;
+            message += "¡Espero tu confirmación para coordinar el pago y la entrega! \n";
+            message += "¡Vamos a encestar este pedido y seguir brillando en la cancha!";
+            
             const whatsappUrl = `https://wa.me/${VENDEDOR_WHATSAPP}?text=${encodeURIComponent(message)}`;
 
             // Abrir en una nueva pestaña
