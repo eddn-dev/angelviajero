@@ -180,6 +180,14 @@ a {
     margin-bottom: var(--spacing-lg);
 }
 
+.highlight {
+    color: var(--primary-orange);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+}
+
 /* Component 2: Process */
 .process {
     padding: var(--spacing-xl) 0;
@@ -447,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
     // REPLACE WITH THE ACTUAL PHONE NUMBER (Format: CountryCode + Number, e.g., 521...)
     const WHATSAPP_PHONE = '5215651899438'; 
-    const WHATSAPP_MESSAGE = '¡Hola AngelViajero! Me interesa información sobre el trámite de la licencia de conducir. ¿Podrían ayudarme, por favor?';
+    const WHATSAPP_MESSAGE = 'Hola, podrías darme más informacion sobre la licencia permanente';
 
     // --- Functionality 1: Dynamic WhatsApp Links ---
 
@@ -460,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateWhatsAppLink = (phone, message) => {
         // Ensure the message is properly encoded for the URL
         const encodedMessage = encodeURIComponent(message);
-        return `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
+        return `https://wa.me/${phone}?text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.`;
     }
 
     /**
@@ -503,7 +511,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <!-- Componente 1: Sección Hero -->
     <header class="hero">
         <div class="container hero__container">
-            <h1 class="hero__title">Obtén tu Licencia de Conducir Rápido y 100% Legal</h1>
+            <h1 class="hero__title">Obtén tu Licencia de Conducir tipo A
+                <span class="highlight">PERMANENTE</span>
+            </h1>
             <p class="hero__subtitle">Evita filas y trámites complicados. Gestionamos todo por ti en tiempo récord. ¡Contacta ahora y asegura tu lugar!</p>
             <a href="#" class="cta-button js-whatsapp-link">
                 Iniciar Trámite por WhatsApp
@@ -533,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2M18 20H6V4H13V9H18V20M8 12H16V14H8V12M8 16H16V18H8V16Z"/></svg>
                         </div>
                         <h3 class="process-card__title">2. Envío de Requisitos</h3>
-                        <p class="process-card__text">Te solicitaremos los documentos básicos. Puedes enviarlos digitalmente de forma segura. Una vez liquidado el costo del trámite <strong>($1,500)</strong>, agendamos tu cita.</p>
+                        <p class="process-card__text">Te solicitaremos los documentos básicos. El mismo día en el que nos mande sus documentos queda listo el trámite. Necesitarás INE, comprobante de domicilio y CURP.</p>
                     </article>
 
                     <article class="process-card">
@@ -604,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h3>¿En cuánto tiempo está listo el trámite?</h3>
                         </summary>
                         <div class="accordion-item__content">
-                            <p>Una vez que nos proporcionas tus datos, la gestión para que puedas pasar a recoger tu licencia toma menos de 2 horas. ¡Es el servicio más rápido! Las citas de recepción están hábiles en un promedio de 5 días después de finalizar el trámite.</p>
+                            <p>Una vez que nos proporcionas tus datos, el mismo día queda listo el trámite. ¡Es el servicio más rápido! Las citas de recepción están hábiles en un promedio de 5 días después de finalizar el trámite.</p>
                         </div>
                     </details>
 
