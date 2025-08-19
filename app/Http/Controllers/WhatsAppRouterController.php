@@ -22,7 +22,7 @@ class WhatsAppRouterController extends Controller
             // Si no hay números configurados, redirige a un número de fallback o muestra un error.
             Log::error('No se han configurado números para el WhatsApp Router.');
             // Puedes redirigir a una página de error o un número por defecto.
-            return redirect()->away('https://wa.me/5651899438?text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.');
+            return redirect()->away('https://api.whatsapp.com/send/?phone=5215651899438&text=%C2%A1Hola%21+Me+gustar%C3%ADa+mas+informacion+sobre+la+licencia+permanente.&type=phone_number&app_absent=0');
         }
 
         // --- LÓGICA DE SELECCIÓN PONDERADA ---
@@ -39,7 +39,7 @@ class WhatsAppRouterController extends Controller
         }
 
         // Construimos la URL final
-        $urlWhatsApp = "https://wa.me/{$numeroSeleccionado}?text=Hola%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.";
+        $urlWhatsApp = "https://api.whatsapp.com/send/?phone={$numeroSeleccionado}?text=Hola%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.&type=phone_number&app_absent=0";
 
         // (Opcional) Registramos el evento para tracking interno
         Log::info("Redirigiendo lead a WhatsApp: {$numeroSeleccionado}");

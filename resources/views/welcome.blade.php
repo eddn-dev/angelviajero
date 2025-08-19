@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateWhatsAppLink = (phone, message) => {
         // Ensure the message is properly encoded for the URL
         const encodedMessage = encodeURIComponent(message);
-        return `https://wa.me/${phone}?text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.`;
+        return `https://api.whatsapp.com/send/?phone=${phone}?text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.&type=phone_number&app_absent=0`;
     }
 
     /**
