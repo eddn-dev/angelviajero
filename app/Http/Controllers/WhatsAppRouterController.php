@@ -39,7 +39,7 @@ class WhatsAppRouterController extends Controller
         }
 
         // Construimos la URL final
-        $urlWhatsApp = "https://api.whatsapp.com/send/?phone={$numeroSeleccionado}&text=Hola%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.&type=phone_number&app_absent=0";
+        $urlWhatsApp = "https://api.whatsapp.com/send/?phone={$numeroSeleccionado}&text=%C2%A1Hola!%20Me%20gustar%C3%ADa%20mas%20informacion%20sobre%20la%20licencia%20permanente.&type=phone_number&app_absent=0";
 
         // (Opcional) Registramos el evento para tracking interno
         Log::info("Redirigiendo lead a WhatsApp: {$numeroSeleccionado}");
