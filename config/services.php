@@ -24,10 +24,8 @@ return [
 
     'whatsapp_router' => [
         'numbers' => [
-            ['number' => '5215651899438', 'weight' => 40], // Vendedor Estrella (40% de probabilidad)
-            ['number' => '5215632467776', 'weight' => 20], // Vendedor 2 (20%)
-            ['number' => '5215651863390', 'weight' => 20], // Vendedor 3 (20%)
-            ['number' => '5215641483993', 'weight' => 20], // Vendedor 4 (20%)
+            ['number' => '5215651863390', 'weight' => 50], // Vendedor 3 (20%)
+            ['number' => '5215641483993', 'weight' => 50], // Vendedor 4 (20%)
         ],
     ],
 
